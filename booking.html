@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Booking &#x2014; SKORIK NJ &#x2022; NY &#x1d42d;&#x1d41a;&#x1d42d;&#x1d42d;&#x1d428;&#x1d428; &#x1d41a;&#x1d42b;&#x1d42d;&#x1d422;&#x1d42c;&#x1d42d;</title>
-  <meta name="description" content="Book a tattoo session with SKORIK NJ &#x2022; NY &#x1d42d;&#x1d41a;&#x1d42d;&#x1d42d;&#x1d428;&#x1d428; &#x1d41a;&#x1d42b;&#x1d42d;&#x1d422;&#x1d42c;&#x1d42d; in Chicago, Illinois.">
+  <meta name="description" content="Book a tattoo session with SKORIK NJ &#x2022; NY &#x1d42d;&#x1d41a;&#x1d42d;&#x1d42d;&#x1d428;&#x1d428; &#x1d41a;&#x1d42b;&#x1d42d;&#x1d422;&#x1d42c;&#x1d42d; in .">
   <link rel="canonical" href="https://eternowebstudio.com/backttt/booking.html">
   <meta property="og:title" content="Booking &#x2014; SKORIK NJ &#x2022; NY &#x1d42d;&#x1d41a;&#x1d42d;&#x1d42d;&#x1d428;&#x1d428; &#x1d41a;&#x1d42b;&#x1d42d;&#x1d422;&#x1d42c;&#x1d42d;">
   <meta property="og:image" content="https://eternowebstudio.com/backttt/img/1.jpg">
@@ -137,6 +137,10 @@
     @media (max-width: 600px) {
       footer { padding: 32px 20px; }
     }
+
+    /* &#x2500;&#x2500; LAYOUT OVERRIDES &#x2500;&#x2500; */
+    /* Each variant gets unique CSS that overrides common defaults */
+
   
     .page-hero { padding: 140px 72px 64px; background: var(--charcoal); border-bottom: 1px solid var(--border); }
     .page-eyebrow { font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
@@ -215,7 +219,7 @@
         <p class="fade-up">Every piece is unique, created with intention and care.</p>
         <div class="info-block fade-up">
           <h3 data-en="Details" data-es="Detalles">Details</h3>
-          <div class="info-item"><span>&#x25c6;</span> <span>Chicago, Illinois, US</span></div>
+          <div class="info-item"><span>&#x25c6;</span> <span>, </span></div>
           <div class="info-item"><span>&#x25c6;</span> <span data-en="Specializing in Tattoo Art" data-es="Especialidad: Tattoo Art">Specializing in Tattoo Art</span></div>
           <div class="info-item"><span>&#x25c6;</span> <a href="https://www.instagram.com/back.ttt" target="_blank" rel="noopener" style="color:var(--dim);text-decoration:none;">@back.ttt</a></div>
           
@@ -231,10 +235,34 @@
       </div>
       <div class="form-panel">
         <h2 class="fade-up" data-en="Send an Inquiry" data-es="Enviar una Consulta">Send an Inquiry</h2>
-        <div class="fade-up" style="text-align:center;padding:48px 32px;border:1px solid var(--border);">
-          <p style="color:var(--dim);margin-bottom:24px;" data-en="Send a DM on Instagram to start your project." data-es="Env&#xed;a un DM en Instagram para comenzar tu proyecto.">Send a DM on Instagram to start your project.</p>
-          <a href="https://www.instagram.com/back.ttt" target="_blank" rel="noopener" class="btn-gold" data-en="Message on Instagram" data-es="Mensaje en Instagram">Message on Instagram</a>
-        </div>
+        <form id="bookingForm" onsubmit="return false;" class="fade-up">
+          <div class="form-group">
+            <label data-en="Name" data-es="Nombre">Name</label>
+            <input type="text" name="name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label data-en="Phone (optional)" data-es="Tel&#xe9;fono (opcional)">Phone (optional)</label>
+            <input type="tel" name="phone" placeholder="Your phone">
+          </div>
+          <div class="form-group">
+            <label data-en="Placement" data-es="Ubicaci&#xf3;n">Placement</label>
+            <input type="text" name="placement" required placeholder="Arm, back, leg...">
+          </div>
+          <div class="form-group">
+            <label data-en="Your Vision" data-es="Tu Visi&#xf3;n">Your Vision</label>
+            <textarea name="vision" rows="5" required placeholder="Describe your tattoo idea..."></textarea>
+          </div>
+          <div class="form-group">
+            <label data-en="References (optional)" data-es="Referencias (opcional)">References (optional)</label>
+            <input type="text" name="references" placeholder="Links to reference images">
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn" data-en="Send Inquiry" data-es="Enviar Consulta">Send Inquiry</button>
+          <div id="formMsg" style="display:none;margin-top:16px;padding:16px;text-align:center;font-size:0.88rem;border-radius:4px;"></div>
+        </form>
       </div>
     </div>
   </div>
@@ -253,6 +281,64 @@
     </div>
     <div class="footer-copy">&#xa9; 2026 SKORIK NJ &#x2022; NY &#x1d42d;&#x1d41a;&#x1d42d;&#x1d42d;&#x1d428;&#x1d428; &#x1d41a;&#x1d42b;&#x1d42d;&#x1d422;&#x1d42c;&#x1d42d;</div>
   </footer>
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      var msg = document.getElementById('formMsg');
+      var form = this;
+      var name = form.querySelector('[name="name"]').value.trim();
+      var email = form.querySelector('[name="email"]').value.trim();
+      var phone = form.querySelector('[name="phone"]').value.trim();
+      var placement = form.querySelector('[name="placement"]').value.trim();
+      var vision = form.querySelector('[name="vision"]').value.trim();
+      var references = form.querySelector('[name="references"]').value.trim();
+      if (!name || !email || !vision) {
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(200,50,50,0.2)';
+        msg.style.color = '#ff6b6b';
+        msg.textContent = 'Please fill in all required fields.';
+        return;
+      }
+      var service = 'Placement: ' + placement;
+      var message = vision;
+      if (references) message += '\n\nReferences: ' + references;
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      msg.style.display = 'none';
+      try {
+        var res = await fetch('https://curious-lemming-262.convex.site/api/booking/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slug: 'backttt',
+            name: name,
+            email: email,
+            phone: phone || undefined,
+            service: service,
+            message: message
+          })
+        });
+        var data = await res.json();
+        if (res.ok && data.ok) {
+          msg.style.display = 'block';
+          msg.style.background = 'rgba(201,168,76,0.15)';
+          msg.style.color = 'var(--gold)';
+          msg.textContent = 'Booking request sent! We\'ll be in touch soon.';
+          form.reset();
+        } else {
+          throw new Error(data.error || 'Failed to submit');
+        }
+      } catch (err) {
+        msg.style.display = 'block';
+        msg.style.background = 'rgba(200,50,50,0.2)';
+        msg.style.color = '#ff6b6b';
+        msg.textContent = 'Something went wrong. Please try again or contact us directly.';
+      }
+      btn.disabled = false;
+      btn.textContent = btn.getAttribute('data-' + document.documentElement.lang) || 'Send Inquiry';
+    });
+  </script>
   
   <script>
     const LANG = { default: 'en', current: document.documentElement.lang || 'en' };
@@ -283,5 +369,16 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
   </script>
+  <script>
+(function(){
+  try {
+    fetch('https://curious-lemming-262.convex.site/api/analytics/pageview', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ slug: 'backttt', page: window.location.pathname })
+    }).catch(function(){});
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
